@@ -9,7 +9,7 @@ int main()
 
 	NetworkModule network(db);
 
-	network.start();
+	//network.start();
 
 	/*db->displayClients();
 	std::cout << "_____________________________________________________" << std::endl;
