@@ -46,8 +46,8 @@ bool NetworkModule::start()
 				}
 				boost::asio::write(socket, boost::asio::buffer(contacts), _ignoredErr);
 
-				_db->disconnectClient("Breton");
-				std::cout << "Breton is connected = " << _db->getClient(name)->isConnected() << std::endl;
+				_db->disconnectClient(name);
+				std::cout << name << " is connected = " << _db->getClient(name)->isConnected() << std::endl;
 			}
 		}
 	}
