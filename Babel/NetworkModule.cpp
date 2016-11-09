@@ -5,14 +5,14 @@
 
 using boost::asio::ip::tcp;
 
-NetworkModule::NetworkModule(Database *db) : _db(db)
+NetworkModule::NetworkModule(Database &db) : _db(db)
 {
 
 }
 
 NetworkModule::~NetworkModule()
 {
-	delete(_db);
+
 }
 
 bool NetworkModule::start()
@@ -21,33 +21,24 @@ bool NetworkModule::start()
 	{
 		boost::asio::io_service io_service;
 		tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 13));
-
+		
 		while (true)
 		{
 			tcp::socket socket(io_service);
 			acceptor.accept(socket);
 
-			std::cout << "client connected, waiting for name..." << std::endl;
 			std::string name(recvMsg(socket));
-			if (!_db->getClient(name))
+			if (!_db.getClient(name))
 				std::cout << "client:" << name << " is unknown." << std::endl;
 			else
 			{
-				_db->connectClient(name, "ip", &socket);
-				std::cout << name << " is connected = " << _db->getClient(name)->isConnected() << std::endl;
+				std::string ip(socket.remote_endpoint().address().to_string());
+				_db.connectClient(name, ip, &socket);
+				
+				std::cout << name << " is connected :" << _db.getClient(name)->isConnected() << std::endl << " with ip : " << ip << std::endl;
+				//boost::asio::write(socket, boost::asio::buffer(contacts), _ignoredErr);
 
-				std::string contacts("");
-				for (auto contact : _db->getClient(name)->getContacts())
-				{
-					if (contact->getName() == _db->getClient(name)->getContacts()[_db->getClient(name)->getContacts().size() - 1]->getName())
-						contacts += contact->getName();
-					else
-						contacts += contact->getName() + ", ";
-				}
-				boost::asio::write(socket, boost::asio::buffer(contacts), _ignoredErr);
-
-				_db->disconnectClient(name);
-				std::cout << name << " is connected = " << _db->getClient(name)->isConnected() << std::endl;
+				_db.disconnectClient(name);
 			}
 		}
 	}
@@ -68,9 +59,11 @@ std::string NetworkModule::recvMsg(tcp::socket &socket)
 	return msg;
 }
 
-std::string NetworkModule::make_daytime_string()
-{
-	time_t now = std::time(0);
-
-	return std::ctime(&now);
-}
+//std::string contacts("");
+//for (auto contact : _db.getClient(name)->getContacts())
+//{
+//	if (contact->getName() == _db.getClient(name)->getContacts()[_db.getClient(name)->getContacts().size() - 1]->getName())
+//		contacts += contact->getName();
+//	else
+//		contacts += contact->getName() + ", ";
+//}
