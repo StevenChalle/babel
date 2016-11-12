@@ -34,10 +34,16 @@
     <ClInclude Include="Database.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ComStruct.h">
+    <ClInclude Include="NetworkModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkModule.h">
+    <ClInclude Include="Connection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rfc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -55,6 +61,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
