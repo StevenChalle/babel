@@ -6,7 +6,6 @@
 int main()
 {
 	Database db;
-
 	NetworkModule network(db);
 
 	network.start();

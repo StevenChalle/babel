@@ -9,10 +9,8 @@
 # include <vector>
 # include <fstream>
 # include "Client.h"
-# include "IDatabase.h"
 
-
-class						Database : public IDatabase
+class						Database
 {
 	bool					_loaded;
 	std::string				_rootPath;
