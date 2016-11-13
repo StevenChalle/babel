@@ -53,7 +53,7 @@ namespace RFC
 struct Data
 {
     char    code;
-    char    data[0];
+    char    *data;
 };
 
 struct Return
