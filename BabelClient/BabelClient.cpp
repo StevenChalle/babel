@@ -8,12 +8,11 @@ BabelClient::BabelClient(IGui &gui, ISound &sound, ICompress &com, IUdp &udp):
     mCompress.init(48000);
     mGui.setCallback(this);
     mUdp.setCallback(this);
-    mSound.startStream(48000, 480);
 }
 
 int BabelClient::run()
 {
-    std::chrono::milliseconds base(10);
+    std::chrono::milliseconds base(30);
 
     mGui.notice("Welcome !");
     while (mRun)
@@ -24,7 +23,8 @@ int BabelClient::run()
 	if (mPort)
 	    sendPacket();
 	auto end = std::chrono::high_resolution_clock::now();
-	//std::this_thread::sleep_for(base - (end - start));
+	if (!mPort)
+	    std::this_thread::sleep_for(base - (end - start));
     }
     return (0);
 }
@@ -68,10 +68,13 @@ void BabelClient::stopDirectCall()
 {
     mPort = 0;
     mUdp.stop();
+    mSound.closeStream();
 }
 
 void BabelClient::startDirectCall(const std::string &ip, int port)
 {
+    mSound.startStream(48000, 480);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     mIp = ip;
     mPort = port;
 }
