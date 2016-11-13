@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/babelclient.dir/main.cpp.o CMakeFiles/babelclient.dir/MainWindow.cpp.o CMakeFiles/babelclient.dir/PaSound.cpp.o  -o babelclient  -L/home/chau/rendu/babelClient/lib -rdynamic -lQt5::Widgets -lportaudio -Wl,-rpath,/home/chau/rendu/babelClient/lib 
